@@ -37,16 +37,17 @@ public class Ex03MethodReferences {
 		String[] titles = {"자바문법" , "자바컬렉션프레임워크", "람다", "스트림"};
 		
 		//static 메서드 호출
-		store.addAll(titles, Book::new, Book::validateLength);
-		Collections.sort(store.getItems(), Item::compareByTitleAsc);
+		// s ->new Book(s);
+		store.addAll(titles, Book::new, Book::validateLength);		// s -> Book.validateLength(s);
+		Collections.sort(store.getItems(), Item::compareByTitleAsc);	// (a, b) -> Item.compareByTitleAsc(a, b)
 		
 		System.out.println("< '인스턴스::메소드' 방식으로 인스턴스 메소드 호출 > ");
-		Runnable printItems = store::forEach;
+		Runnable printItems = store::forEach;	// () -> store.forEach();
 		printItems.run();
 		System.out.println();
 		
 		System.out.println("< '클래스::메소드' 방식으로 인스턴스 메소드 호출 >");
-		Consumer<Store> printItems2 = Store::forEach;
+		Consumer<Store> printItems2 = Store::forEach;	// s -> s.forEach();
 		printItems2.accept(store);
 		System.out.println();
 				
@@ -79,7 +80,7 @@ interface Item {
 	public abstract String getTitle() ;
 		
 	public static int compareByTitleAsc(Item item1, Item item2) {
-		return item1.getTitle().compareTo(item2.getTitle());
+		return item1.getTitle().compareTo(item2.getTitle()); // test 입니다.
 	}
 }
 
